@@ -1,4 +1,4 @@
-var CLIENT_ID = '574017246766-kgm3a8gn76j28m1of7983gm4hk6d4tir.apps.googleusercontent.com';
+var CLIENT_ID = 'CLIENT_ID';
 var SCOPES = 'https://www.googleapis.com/auth/drive';
 
 /**

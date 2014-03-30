@@ -181,8 +181,8 @@ function insertFile(fileData) {
 };
 
 var app = {
-    client_id: '574017246766-vv5k0tieito9n6jnin0133jnnuqag6u7.apps.googleusercontent.com',
-    client_secret: '8z0CSJuBWqPM6sKfXZgnsDq4',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
     redirect_uri: 'http://localhost',
     scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive',
 //https://www.googleapis.com/auth/drive
