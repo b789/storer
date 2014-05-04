@@ -1,54 +1,7 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<!--<html>-->
-    <!--<head>-->
-        <!--<meta charset="utf-8" />-->
-        <!--<meta name="format-detection" content="telephone=no" />-->
-        <!--&lt;!&ndash; WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 &ndash;&gt;-->
-        <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
-        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
-
-        <!--<title>Hello World</title>-->
-    <!--</head>-->
-    <!--<body>-->
-        <!--<div class="app">-->
-            <!--<h1>PhoneGap</h1>-->
-            <!--<div id="deviceready" class="blink">-->
-
-                <!--<p class="event listening">Connecting to Device</p>-->
-                <!--<p class="event received">Device is Ready</p>-->
-                <!--<a href="storer.html">storer</a>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<script type="text/javascript" src="phonegap.js"></script>-->
-        <!--<script type="text/javascript" src="js/index.js"></script>-->
-        <!--<script type="text/javascript">-->
-            <!--app.initialize();-->
-        <!--</script>-->
-
-    <!--</body>-->
-<!--</html>-->
-
-<!-- asdasdasdasdasdasd546asd5665asdf56f jljljicfjijilòfjòilvgjiòilòsdgv-->
-
-<html>
+<html ng-app="angulargap">
 <head>
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
@@ -57,108 +10,90 @@
     <title>Google OAuth with PhoneGap</title>
 </head>
 <body>
-<div class="app">
-    <div id="login">
-        <a>Sign In With Google!</a>
-        <p></p>
-    </div>
-    <div id="greet">
-        <h1>GR</h1>
-    </div>
-    <input type="file" id="filePicker" style="display: none" />
+<div class="app" ng-controller="HomeController">
     <br>
     <br>
-    <button  id="getFile" style="display: none" >fsdfsdf</button>
+    <div ng-if="info.tokenasd == ''">
+
+        <div id="login">
+            <a ng-click="app.onLoginButtonClick()"><h1>Sign In With Google to use the app!</h1></a>
+            <p></p>
+        </div>
+    </div>
+
+    <div ng-if="info.tokenasd != ''">
+
+        <div ng-if="info.pswasd == false">
+
+            <h1>Enter your master password: </h1>
+            <input type="text" ng-model="info.psw">
+            <br>
+            <button ng-click="app.logIn()">Confirm</button>
+        </div>
+
+        <div ng-if="info.pswasd == true">
+            <!--REAL APP-->
+
+            <!--Filter by Site:<input ng-model="search.site"/> --- -->
+            <button  ng-click="app.add()">Add +</button>
+
+            <div ng-if="info.addasd == true">
+
+                <h1>New account info: </h1>
+                <table  align="center">
+                    <tr>
+                        <td align="left">Site:</td>
+                        <td><input align="left" type="text" ng-model="info.currentSite"/></td>
+                    </tr>
+                    <tr>
+                        <td align="left">User:</td>
+                        <td><input align="left" type="text" ng-model="info.currentUser"/></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Password:</td>
+                        <td><input align="left" type="text" ng-model="info.currentPassword"/></td>
+                    </tr>
+                </table>
+                <button ng-click="app.saveAccount()">Save Account</button>
+
+            </div>
+
+            <div ng-if="info.addasd == false">
+                <div ng-if="info.data.length>0">
+                    <table align="center">
+                        <tr>
+                            <th>Site</th>
+                            <th>User</th>
+                            <th>Password</th>
+                            <th>Remove</th>
+                        </tr>
+                        <tr ng-repeat="el in info.data">
+                            <!--<div>{{site}}}</div>-->
+                            <!--<div ng-repeat="acc in el">-->
+                                <td> {{el.site}}</td>
+                                <td> {{el.user}}</td>
+                                <td> {{el.psw}}</td>
+                                <td> <a ng-click="app.removeAccount(el)">X</a></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
 </div>
 <script type="text/javascript" src="phonegap.js"></script>
+<script type="text/javascript" src="lib/angular/angular.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
-<script type="text/javascript" src="js/ind.js"></script>
+<!--<script type="text/javascript" src="js/angular-touch.js"></script>-->
+<!--<script type="text/javascript" src="js/ind.js"></script>-->
 </body>
 </html>
 
 
-
-
-<!--<html>-->
-<!--<head>-->
-    <!--<meta charset="utf-8" />-->
-    <!--<meta name="format-detection" content="telephone=no" />-->
-    <!--<!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->-->
-    <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, target-densitydpi=device-dpi" />-->
-    <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
-    <!--<title>Hello World</title>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--<div class="app">-->
-    <!--<h1>PhoneGap</h1>-->
-    <!--<div id="deviceready" class="blink">-->
-
-    <!--</div>-->
-<!--</div>-->
-<!--<script type="text/javascript" src="phonegap.js"></script>-->
-<!--<script type="text/javascript">-->
-    <!--document.addEventListener('deviceready', onDeviceReady, false);-->
-
-    <!--function downloadFile() {-->
-        <!--console.log('downloadFile');-->
-        <!--window.requestFileSystem(-->
-                <!--LocalFileSystem.PERSISTENT,-->
-                <!--0,-->
-                <!--onRequestFileSystemSuccess,-->
-                <!--fail-->
-        <!--);-->
-    <!--}-->
-
-    <!--function onRequestFileSystemSuccess(fileSystem) {-->
-        <!--console.log('onRequestFileSystemSuccess');-->
-        <!--fileSystem.root.getFile(-->
-                <!--'dummy.html',-->
-                <!--{create: true, exclusive: false},-->
-                <!--onGetFileSuccess,-->
-                <!--fail-->
-        <!--);-->
-    <!--}-->
-
-    <!--function onGetFileSuccess(fileEntry) {-->
-        <!--console.log('onGetFileSuccess!');-->
-        <!--var path = fileEntry.toURL().replace('dummy.html', '');-->
-        <!--var fileTransfer = new FileTransfer();-->
-        <!--fileEntry.remove();-->
-
-        <!--fileTransfer.download(-->
-                <!--'http://b789.no-ip.biz/8-1.txt',-->
-                        <!--path + '8-1.txt',-->
-                <!--function(file) {-->
-                    <!--console.log('download complete: ' + file.toURI());-->
-                    <!--showLink(file.toURI());-->
-                <!--},-->
-                <!--function(error) {-->
-                    <!--console.log('download error source ' + error.source);-->
-                    <!--console.log('download error target ' + error.target);-->
-                    <!--console.log('upload error code: ' + error.code);-->
-                <!--}-->
-        <!--);-->
-    <!--}-->
-
-    <!--function showLink(url) {-->
-        <!--alert(url);-->
-        <!--var divEl = document.getElementById('deviceready');-->
-        <!--var aElem = document.createElement('a');-->
-        <!--aElem.setAttribute('target', '_blank');-->
-        <!--aElem.setAttribute('href', url);-->
-        <!--aElem.appendChild(document.createTextNode('Ready! Click To Open.'))-->
-        <!--divEl.appendChild(aElem);-->
-    <!--}-->
-
-    <!--function fail(evt) {-->
-        <!--console.log(evt.target.error.code);-->
-    <!--}-->
-
-    <!--/* When this function is called, PhoneGap has been initialized and is ready to roll */-->
-    <!--function onDeviceReady() {-->
-        <!--console.log('device ready!');-->
-        <!--downloadFile();-->
-    <!--}-->
-<!--</script>-->
-<!--</body>-->

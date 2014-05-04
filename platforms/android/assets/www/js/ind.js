@@ -142,109 +142,6 @@ var googleapi = {
         });
 
 
-
-
-
-//            alert('downloadFile');
-//            window.requestFileSystem(
-//                LocalFileSystem.PERSISTENT,
-//                0,
-//                function onRequestFileSystemSuccess(fileSystem) {
-//                    alert('onRequestFileSystemSuccess');
-//                    fileSystem.root.getFile(
-//                        'dummy.html',
-//                        {create: true, exclusive: false},
-//                        function onGetFileSuccess(fileEntry) {
-//                            alert('onGetFileSuccess!');
-//                            var path = fileEntry.toURL().replace('dummy.html', '');
-//                            var fileTransfer = new FileTransfer();
-//                            fileEntry.remove();
-//                            googleapi.getToken({
-//                                client_id: this.client_id,
-//                                client_secret: this.client_secret
-//                            }).then(function(data) {
-//                                var uri = localStorage.link; //+ "&access_token=" + data.access_token;
-//                                fileTransfer.download(
-//                                    uri,
-//                                        path + 'File.txt',
-//                                    function (file) {
-//                                        alert('download complete: ' + file.toURI());
-//                                        showLink(file.toURI());
-//                                    },
-//                                    function (error) {
-//                                        alert('download error source ' + error.source);
-//                                        alert('download error target ' + error.target);
-//                                        alert('upload error code: ' + error.code);
-//                                    }
-//                                );
-//                            })
-//                        },
-//                        fail
-//                    );
-//                },
-//                fail
-//            );
-
-
-
-
-//    window.requestFileSystem(
-//        LocalFileSystem.PERSISTENT, 0,
-//        function onFileSystemSuccess(fileSystem) {
-//            fileSystem.root.getFile(
-//                "Nitobi.pdf", {create: true, exclusive: false},
-//                function gotFileEntry(fileEntry){
-//                    var sPath = fileEntry.fullPath.replace("Nitobi.pdf","");
-//                    var fileTransfer = new FileTransfer();
-////                    fileEntry.remove();
-////                    if (device.platform === "Android" && sPath.indexOf("file://") === 0) {
-////                        sPath = sPath.substring(7);
-////                    }
-//                    googleapi.getToken({
-//                        client_id: this.client_id,
-//                        client_secret: this.client_secret
-//                    }).then(function(data) {
-////http://b789.no-ip.biz/8-1.txt
-////                        var uri = localStorage.link + "&access_token=" + data.access_token;
-//                        var uri = "http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf";
-//                        fileTransfer.download(
-//                            uri,
-//                            "sdcard/Nitobi.pdf",
-//                            function (theFile) {
-//                                alert("download complete: " + theFile.toURI());
-//                                alert("download complete: " + JSON.stringify(theFile));
-//                                showLink(theFile.toURI());
-//                            },
-//                            function (error) {
-//                                alert("download error source " + JSON.stringify(error));
-//                                alert("download error target " + error.target);
-//                                alert("upload error code: " + error.code);
-//                            },true
-//                        );
-//                    })
-//                })
-//        });
-//
-        
-//    getFile: function() {
-//        alert("asd");
-//        var fileTransfer = new FileTransfer();
-//        var uri = localStorage.link;
-//        alert("asd2");
-//        fileTransfer.download(
-//            uri,
-//            "/Downaoad/blavla.txt",
-//            function(entry) {
-//                alert("download complete: " + entry.fullPath);
-//                console.log("download complete: " + entry.fullPath);
-//            },
-//            function(error) {
-//                alert("£");
-//                alert(JSON.stringify(error));
-//                alert("download error target " + error.target);
-//                alert("upload error code" + error.code);
-//            }
-//        );
     },
     saveFile :function (evt) {
 
@@ -324,8 +221,8 @@ function fail(evt) {
 
 
 var app = {
-    client_id: 'client_id',
-    client_secret: 'client_secret',
+    client_id: '574017246766-vv5k0tieito9n6jnin0133jnnuqag6u7.apps.googleusercontent.com',
+    client_secret: '8z0CSJuBWqPM6sKfXZgnsDq4',
     redirect_uri: 'http://localhost',                             //drive.appdata, drive.apps.readonly, drive.file, drive.metadata.readonly, drive.readonly
     scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.readonly',
 //https://www.googleapis.com/auth/drive

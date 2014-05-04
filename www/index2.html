@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--FILE PER PROVE DI STILE -->
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Google OAuth with PhoneGap</title>
+</head>
+<body>
+<div class="app">
+
+    <div ng-if="info.tokenasd == ''">
+
+        <div id="login">
+            <a ng-click="app.onLoginButtonClick()"><h1>Sign In With Google to use the app!</h1></a>
+            <p></p>
+        </div>
+    </div>
+
+    <div ng-if="info.tokenasd != ''">
+
+        <div ng-if="info.pswasd == false">
+
+            <h1>Enter Your Master password</h1>
+            <input type="text" ng-model="info.psw">
+            <br>
+            <button ng-click="app.logIn()">Confirm</button>
+        </div>
+
+        <div ng-if="info.pswasd == true">
+            <!--REAL APP-->
+
+            <button  ng-click="app.add()">Add</button>
+
+            <div ng-if="info.addasd == true">
+                <h1>New account info: </h1>
+                <table  align="center">
+                    <tr>
+                        <td align="left">Site:</td>
+                        <td><input align="left" type="text" ng-model="info.currentSite"/></td>
+                    </tr>
+                    <tr>
+                        <td align="left">User:</td>
+                        <td><input align="left" type="text" ng-model="info.currentUser"/></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Password:</td>
+                        <td><input align="left" type="text" ng-model="info.currentPassword"/></td>
+                    </tr>
+                </table>
+                <button ng-click="app.saveAccount()">Save Account</button>
+
+            </div>
+            <div ng-if="info.addasd == false">
+
+                <div ng-if="info.data.length>0">
+                    <table align="center">
+                        <tr>
+                            <th>Site</th>
+                            <th>User</th>
+                            <th>Password</th>
+                            <th>Remove</th>
+                        </tr>
+                        <tr ng-repeat="el in info.data | orderBy:site ">
+                            <!--<div>{{site}}}</div>-->
+                            <!--<div ng-repeat="acc in el">-->
+                                <td> {{el.site}}</td>
+                                <td> {{el.user}}</td>
+                                <td> {{el.psw}}</td>
+                                <td> <a ng-click="app.removeAccount(el)">X</a></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
+
+
