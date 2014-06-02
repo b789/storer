@@ -71,14 +71,53 @@ body {
     }
 }
 
-h1 {
-    font-size:24px;
-    font-weight:normal;
-    margin:0px;
-    overflow:visible;
-    padding:0px;
-    text-align:center;
+@media all and (min-width: 801px) {
+    #wrapper {
+        width: 80%;
+        margin: auto;
+        background-color: #ffff00;
+    }
+    #main {
+        margin-left: 40%;
+    }
+    #sidebar {
+        width: 40%;
+        float: left;
+    }
+    h1 {
+        font-size:24px;
+        font-weight:normal;
+        margin:0px;
+        overflow:visible;
+        padding:0px;
+        text-align:center;
+    }
 }
+@media all and (max-width: 800px) {
+    #wrapper {
+        width: 90%;
+        min-width: 0;
+        margin: auto;
+        background-color: #ffff00;
+    }
+    #main {
+        margin-left: 0;
+    }
+    #sidebar {
+        width: auto;
+        float: none;
+    }
+    h1 {
+        font-size:16px;
+        font-weight:normal;
+        margin:0px;
+        overflow:visible;
+        padding:0px;
+        text-align:center;
+    }
+}
+
+
 
 .event {
     border-radius:4px;

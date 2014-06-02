@@ -18,6 +18,10 @@ angulargap.controller("HomeController", function ($scope) {
 
         currentPassword : "",
 
+        currentCategory:"None",
+
+        currentCategory2:"",
+
         data : [],
 
         addasd : false
@@ -145,6 +149,7 @@ angulargap.controller("HomeController", function ($scope) {
 //                        $scope.info.data={"accounts":[]};
                     }else {
                         $scope.info.data=JSON.parse($scope.app.cript(xhr.response));
+                        $scope.app.getCategories();
                     }
                     $scope.$apply();
 
@@ -169,22 +174,27 @@ angulargap.controller("HomeController", function ($scope) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + data.access_token);
                 xhr.onload = function (e) {
                     var items = JSON.parse(xhr.response).items;
-                    alert("bib");
-                    alert(items.length);
+//                    alert("bib");
+//                    alert(items.length);
                     var i =0;
                     var trovato = false;
                     for (i = 0, len = items.length; i < len; i++) {
                         if (items[i].title=="File.txt" && items[i].labels.trashed == false) {
-
+//                            alert(localStorage.link  + "---" + items[i].downloadUrl);
                             trovato = true;
                             localStorage.link = items[i].downloadUrl;
+                            $scope.googleapi.getFile();
                             break;
                         }
 
                     }
-                    alert(i);
-                    alert(trovato);
-                    alert(localStorage.link);
+                    if (trovato==false) {
+                        localStorage.fileId = -1; //file non trovato , chi sa perche' undefined non funziona mi faccia sapere
+                    }
+//                    alert(i);
+//                    alert(trovato);
+//                    alert(localStorage.link);
+
 
                 };
                 xhr.onerror = function () {
@@ -227,12 +237,12 @@ angulargap.controller("HomeController", function ($scope) {
                     var url="";
                     var type="";
 //                    alert(localStorage.fileId);
-                    if (localStorage.fileId == undefined) {
-
+                    if (localStorage.fileId == undefined || localStorage.fileId==-1) {
+//                        alert("ad");
                         url = "https://www.googleapis.com/upload/drive/v2/files?uploadType=multipart&access_token=";
                         type = "POST";
                     } else {
-
+//                        alert("cccc");
                         url = "https://www.googleapis.com/upload/drive/v2/files/"+localStorage.fileId+"?uploadType=multipart&access_token=";
                         type = "PUT";
                     }
@@ -287,7 +297,7 @@ angulargap.controller("HomeController", function ($scope) {
                 scope: this.scope
             }).done(function() {
                 //Show the greet view if access is granted
-                alert("Authorization granted");
+//                alert("Authorization granted");
                 $scope.app.showGreetView();
             }).fail(function(data) {
                 alert("ko");
@@ -315,7 +325,7 @@ angulargap.controller("HomeController", function ($scope) {
                 $scope.$apply();
             } else {
                 if (hash==$scope.info.hashasd) {
-                    alert("Access granted");
+//                    alert("Access granted");
                     $scope.info.pswasd = true;
                     $scope.$apply();
                 } else {
@@ -337,9 +347,14 @@ angulargap.controller("HomeController", function ($scope) {
             return (res);
         },
         saveAccount: function() {
-            $scope.info.data.push({"site": $scope.info.currentSite, "user": $scope.info.currentUser, "psw": $scope.info.currentPassword});
+            var cat=$scope.info.currentCategory;
+            if ($scope.info.currentCategory=="New category") {
+                cat=$scope.info.currentCategory2
+            }
+            $scope.info.data.push({"site": $scope.info.currentSite, "user": $scope.info.currentUser, "psw": $scope.info.currentPassword, "category":cat});
             $scope.googleapi.saveFile(JSON.stringify($scope.info.data));
             $scope.info.addasd = false;
+            $scope.app.getCategories();
         },
         removeAccount: function(el) {
             var index = $scope.info.data.indexOf(el);
@@ -351,6 +366,9 @@ angulargap.controller("HomeController", function ($scope) {
             $scope.info.currentSite = "";
             $scope.info.currentUser = "";
             $scope.info.currentPassword = "";
+            $scope.info.currentCategory = "None";
+            $scope.info.currentCategory2 = "";
+
 
             $scope.info.addasd = true;
         },
@@ -365,19 +383,54 @@ angulargap.controller("HomeController", function ($scope) {
             } else {
                 $scope.info.tokenasd = localStorage.access_token;
             }
+        },
+        copy: function(psw) {   //https://github.com/VersoSolutions/CordovaClipboard
+            cordova.plugins.clipboard.copy(psw);
+        },
+        toggleVis: function(bool) {
+            return !bool;
+        },
+        shownPass: function(psw,vis) {
+            if (vis==true) {
+                return (psw);
+            } else {
+                var str = "";
+                for (i = 0, len = psw.length; i < len; i++) {
+                    str = str + "*";
+                }
+                return str;
+            }
+        },
+        getCategories: function() {
+            $scope.options = [{value:"",label:"All"},{value:"None",label:"None"},{value:"New category",label:"New category"}];
+            $scope.optionsLabels = ["All","None","New category"]; //per cercare meglio con index of
+            for (i = 0, len = $scope.info.data.length; i < len; i++) {
+                if ($scope.optionsLabels.indexOf($scope.info.data[i].category)==-1) {
+                    $scope.optionsLabels.push($scope.info.data[i].category);
+                    $scope.options.push({value:$scope.info.data[i].category,label:$scope.info.data[i].category});
+                }
+            }
         }
-
 
     };
 
+//    $scope.options = [{value:"",label:"All"},{value:"None",label:"None"},{value:"New category",label:"New category"}];
+
+    $scope.search = {
+        category: "",
+        site:""
+    };
+
+//    $scope.search2.category="";
 
     $scope.app.initTokenHash();
+    $scope.app.getCategories();
 
-    if (localStorage.link == undefined) {
+//    if (localStorage.link == undefined) {
         $scope.googleapi.getFileList();
-    }
+//    }
 
-    $scope.googleapi.getFile();
+//    $scope.googleapi.getFile(); //bisognerebbe sapere versione per questo, impossibile su piu' dispositivi quindi cerchiamo per nome
 
 });
 

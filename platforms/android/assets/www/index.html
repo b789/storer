@@ -7,42 +7,52 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="lib/boo/css/bootstrap.min.css" />
     <title>Google OAuth with PhoneGap</title>
 </head>
 <body>
-<div class="app" ng-controller="HomeController">
+<div id="wrapper" ng-controller="HomeController">
     <br>
     <br>
-    <div ng-if="info.tokenasd == ''">
+    <div ng-show="info.tokenasd == ''">
 
         <div id="login">
-            <a ng-click="app.onLoginButtonClick()"><h1>Sign In With Google to use the app!</h1></a>
+            <a class="btn btn-info" ng-click="app.onLoginButtonClick()"><h1>Sign In With Google to use the app!</h1></a>
             <p></p>
         </div>
     </div>
 
-    <div ng-if="info.tokenasd != ''">
+    <div ng-show="info.tokenasd != ''">
 
-        <div ng-if="info.pswasd == false">
+        <div style="text-align:center" ng-show="info.pswasd == false">
 
             <h1>Enter your master password: </h1>
             <input type="text" ng-model="info.psw">
             <br>
-            <button ng-click="app.logIn()">Confirm</button>
+            <br>
+            <button class="btn btn-info" ng-click="app.logIn()">Confirm</button>
         </div>
 
-        <div ng-if="info.pswasd == true">
+        <div ng-show="info.pswasd == true">
             <!--REAL APP-->
 
-            <!--Filter by Site:<input ng-model="search.site"/> --- -->
-            <button  ng-click="app.add()">Add +</button>
-
-            <div ng-if="info.addasd == true">
+            <div style="text-align:center" ng-show="info.addasd == true">
 
                 <h1>New account info: </h1>
-                <table  align="center">
+                <table  align="center" width=90%>
                     <tr>
-                        <td align="left">Site:</td>
+                        <td align="left">Category:</td>
+                        <td>
+                            <span ng-show="info.currentCategory!='New category'">
+                                <select ng-model="info.currentCategory" ng-options="opt.value as opt.label for opt in options"></select>
+                            </span>
+                            <span ng-show="info.currentCategory=='New category'">
+                                <input align="left" type="text" ng-model="info.currentCategory2"/>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left">Name:</td>
                         <td><input align="left" type="text" ng-model="info.currentSite"/></td>
                     </tr>
                     <tr>
@@ -54,28 +64,52 @@
                         <td><input align="left" type="text" ng-model="info.currentPassword"/></td>
                     </tr>
                 </table>
+                <button ng-click="info.addasd=false">Back</button>
                 <button ng-click="app.saveAccount()">Save Account</button>
 
             </div>
 
-            <div ng-if="info.addasd == false">
-                <div ng-if="info.data.length>0">
-                    <table align="center">
-                        <tr>
-                            <th>Site</th>
-                            <th>User</th>
-                            <th>Password</th>
-                            <th>Remove</th>
-                        </tr>
-                        <tr ng-repeat="el in info.data">
-                            <!--<div>{{site}}}</div>-->
-                            <!--<div ng-repeat="acc in el">-->
-                                <td> {{el.site}}</td>
-                                <td> {{el.user}}</td>
-                                <td> {{el.psw}}</td>
-                                <td> <a ng-click="app.removeAccount(el)">X</a></td>
-                        </tr>
-                    </table>
+            <div ng-show="info.addasd == false">
+
+                <div style="text-align:center">
+                    Filter by Site:<input ng-model="search.site"/>
+                    <button class="btn btn-info" ng-click="app.add()">Add +</button>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1 col-md-1">
+                    </div>
+                    <div class="col-sm-10 col-md-10" ng-show="info.data.length>0">
+                        <label for="catSel">Category</label>
+                        <select id="catSel" ng-model="search.category" ng-options="opt.value as opt.label for opt in options">
+                        </select>
+                        <!--{{search}}-->
+                        <table style="background-color:honeydew;" width=90% class="table-bordered" align="center">
+                            <tr>
+                                <th>Name</th>
+                                <th>User</th>
+                                <th>Password</th>
+                                <th>Category</th>
+                                <th>Reveal</th>
+                                <th>Copy</th>
+                                <th>Remove</th>
+                            </tr>
+                            <tr ng-repeat="el in info.data | orderBy:'site' | filter:search track by $index" ng-init="vis=false">
+                                <!--<div>{{site}}}</div>-->
+                                <!--<div ng-repeat="acc in el">-->
+                                    <td> {{el.site}}</td>
+                                    <td> {{el.user}}</td>
+                                    <td> {{app.shownPass(el.psw,vis)}}</td>
+                                    <td> {{el.category}}</td>
+                                    <td> <a class="btn btn-info" ng-click="vis=app.toggleVis(vis)">S/H</a></td>
+                                    <td> <a class="btn btn-info" ng-click="app.copy(el.psw)">copy</a></td>
+                                    <td> <a class="btn btn-danger" ng-click="app.removeAccount(el)">X</a></td>
+                            </tr>
+                        </table>
+                        <!--{{info.data}}-->
+                    </div>
+                    <div class="col-sm-1 col-md-1">
+                    </div>
                 </div>
 
             </div>
@@ -87,10 +121,12 @@
 
 
 </div>
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="phonegap.js"></script>
 <script type="text/javascript" src="lib/angular/angular.js"></script>
+<script type="text/javascript" src="lib/boo/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+
 <!--<script type="text/javascript" src="js/angular-touch.js"></script>-->
 <!--<script type="text/javascript" src="js/ind.js"></script>-->
 </body>

@@ -149,6 +149,13 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "file": "plugins/com.verso.cordova.clipboard/www/clipboard.js",
+        "id": "com.verso.cordova.clipboard.Clipboard",
+        "clobbers": [
+            "cordova.plugins.clipboard"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -156,7 +163,8 @@ module.exports.metadata =
 {
     "org.apache.cordova.inappbrowser": "0.3.3",
     "org.apache.cordova.file": "1.0.1",
-    "org.apache.cordova.file-transfer": "0.4.2"
+    "org.apache.cordova.file-transfer": "0.4.2",
+    "com.verso.cordova.clipboard": "0.1.0"
 }
 // BOTTOM OF METADATA
 });

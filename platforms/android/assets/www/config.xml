@@ -6,14 +6,14 @@
         id        = "com.b789.storer"
         version   = "1.0.0">
 
-    <name>HelloWorld</name>
+    <name>Storer</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Simple program to store your password on your google drive.
     </description>
 
-    <author href="http://phonegap.com" email="support@phonegap.com">
-        PhoneGap Team
+    <author href="http://b789.tk" email="no@no.com">
+        b789
     </author>
 
     <!--
