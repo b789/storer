@@ -351,6 +351,9 @@ angulargap.controller("HomeController", function ($scope) {
             if ($scope.info.currentCategory=="New category") {
                 cat=$scope.info.currentCategory2
             }
+            if ($scope.currentElement != -1) {
+                $scope.info.data.splice($scope.currentElement, 1);
+            }
             $scope.info.data.push({"site": $scope.info.currentSite, "user": $scope.info.currentUser, "psw": $scope.info.currentPassword, "category":cat});
             $scope.googleapi.saveFile(JSON.stringify($scope.info.data));
             $scope.info.addasd = false;
@@ -372,6 +375,20 @@ angulargap.controller("HomeController", function ($scope) {
 
             $scope.info.addasd = true;
         },
+        goBack: function() {
+            $scope.info.addasd=false;
+            $scope.currentElement=-1;
+        },
+        edit: function(el) {
+            $scope.info.currentSite = el.site;
+            $scope.info.currentUser = el.user;
+            $scope.info.currentPassword = el.psw;
+            $scope.info.currentCategory = el.category;
+            $scope.info.currentCategory2 = "";
+            $scope.currentElement=$scope.info.data.indexOf(el);
+
+            $scope.info.addasd = true;
+    },
         initTokenHash: function() {
             if (localStorage.hash==undefined) {
                 $scope.info.hashasd ="";
@@ -421,6 +438,7 @@ angulargap.controller("HomeController", function ($scope) {
         site:""
     };
 
+    $scope.currentElement = -1;
 //    $scope.search2.category="";
 
     $scope.app.initTokenHash();

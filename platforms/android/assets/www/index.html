@@ -64,7 +64,7 @@
                         <td><input align="left" type="text" ng-model="info.currentPassword"/></td>
                     </tr>
                 </table>
-                <button ng-click="info.addasd=false">Back</button>
+                <button ng-click="app.goBack()">Back</button>
                 <button ng-click="app.saveAccount()">Save Account</button>
 
             </div>
@@ -84,27 +84,27 @@
                         <select id="catSel" ng-model="search.category" ng-options="opt.value as opt.label for opt in options">
                         </select>
                         <!--{{search}}-->
-                        <table style="background-color:honeydew;" width=90% class="table-bordered" align="center">
+                        <table style="background-color:honeydew;" width=95% class="table-bordered table-striped" align="center">
                             <tr>
                                 <th>Name</th>
                                 <th>User</th>
                                 <th>Password</th>
-                                <th>Category</th>
-                                <th>Reveal</th>
-                                <th>Copy</th>
-                                <th>Remove</th>
+                                <th>Options</th>
                             </tr>
-                            <tr ng-repeat="el in info.data | orderBy:'site' | filter:search track by $index" ng-init="vis=false">
-                                <!--<div>{{site}}}</div>-->
-                                <!--<div ng-repeat="acc in el">-->
+                            <tbody ng-repeat="el in info.data | orderBy:'site' | filter:search track by $index" ng-init="bla = {opt:false,vis:false}">
+                                <tr>
                                     <td> {{el.site}}</td>
                                     <td> {{el.user}}</td>
-                                    <td> {{app.shownPass(el.psw,vis)}}</td>
-                                    <td> {{el.category}}</td>
-                                    <td> <a class="btn btn-info" ng-click="vis=app.toggleVis(vis)">S/H</a></td>
+                                    <td ng-click="bla.vis=app.toggleVis(bla.vis)"> {{app.shownPass(el.psw,bla.vis)}} </td>
+                                    <td> <a class="btn btn-info" ng-click="bla.opt=app.toggleVis(bla.opt)">Detail</a></td>
+                                </tr>
+                                <tr ng-show="bla.opt">
+                                    <td> category: {{el.category}}</td>
                                     <td> <a class="btn btn-info" ng-click="app.copy(el.psw)">copy</a></td>
-                                    <td> <a class="btn btn-danger" ng-click="app.removeAccount(el)">X</a></td>
-                            </tr>
+                                    <td> <a class="btn btn-info" ng-click="app.edit(el)">edit</a></td>
+                                    <td> <a class="btn btn-danger" ng-click="app.removeAccount(el)">delete</a></td>
+                                </tr>
+                            </tbody>
                         </table>
                         <!--{{info.data}}-->
                     </div>
