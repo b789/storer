@@ -148,6 +148,7 @@ angulargap.controller("HomeController", function ($scope) {
                         alert("No response");
 //                        $scope.info.data={"accounts":[]};
                     }else {
+//                        alert($scope.app.cript(xhr.response));
                         $scope.info.data=JSON.parse($scope.app.cript(xhr.response));
                         $scope.app.getCategories();
                     }
@@ -183,6 +184,7 @@ angulargap.controller("HomeController", function ($scope) {
 //                            alert(localStorage.link  + "---" + items[i].downloadUrl);
                             trovato = true;
                             localStorage.link = items[i].downloadUrl;
+                            localStorage.fileId = items[i].id;
                             $scope.googleapi.getFile();
                             break;
                         }
@@ -322,12 +324,12 @@ angulargap.controller("HomeController", function ($scope) {
                 $scope.info.hashasd = hash;
                 $scope.info.pswasd = true;
                 alert("Password saved");
-                $scope.$apply();
+                $scope.googleapi.getFileList();
             } else {
                 if (hash==$scope.info.hashasd) {
 //                    alert("Access granted");
                     $scope.info.pswasd = true;
-                    $scope.$apply();
+                    $scope.googleapi.getFileList();
                 } else {
                     alert("Wrong password");
                 }
@@ -335,7 +337,7 @@ angulargap.controller("HomeController", function ($scope) {
 
         },
         cript: function(info) {  // "cript"
-            var hashString = $scope.info.hashasd.toString();
+            var hashString = $scope.info.psw;
             var hashLen = hashString.length;
             var i=0;
             var res = "";
@@ -445,7 +447,7 @@ angulargap.controller("HomeController", function ($scope) {
     $scope.app.getCategories();
 
 //    if (localStorage.link == undefined) {
-        $scope.googleapi.getFileList();
+
 //    }
 
 //    $scope.googleapi.getFile(); //bisognerebbe sapere versione per questo, impossibile su piu' dispositivi quindi cerchiamo per nome
